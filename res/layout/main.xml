@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" 
 	android:layout_height="fill_parent"
-	android:id="@+id/FrameLayout" android:background="@drawable/bg">
+	android:background="@drawable/bg">
 	<ImageView android:layout_width="fill_parent"
 		android:layout_height="fill_parent" 
 		android:src="@drawable/eight_ball"
@@ -13,11 +13,14 @@
     		android:layout_width="fill_parent"
     		android:layout_height="fill_parent"
     		android:gravity="center">
-		<ImageView android:id="@+id/MessageImage" 
-			android:layout_width="wrap_content" 
-			android:layout_height="wrap_content" 
-			android:src="@drawable/triangle"
-			android:gravity="center">
-		</ImageView>
-	</LinearLayout>
+			<TextView android:id="@+id/MessageTextView" 
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content" 
+				android:layout_gravity="center" 
+				android:background="@drawable/triangle" 
+				android:text="@string/shake_me_title" 
+				android:focusable="false" 
+				android:gravity="center_vertical|center">
+			</TextView>
+</LinearLayout>
 </FrameLayout>
