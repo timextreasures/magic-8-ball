@@ -34,7 +34,7 @@ public class Magic8Ball extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.shake, menu);
+		menuInflater.inflate(R.menu.menu, menu);
 		return (super.onCreateOptionsMenu(menu));
 	}
 
