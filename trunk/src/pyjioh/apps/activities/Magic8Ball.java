@@ -11,9 +11,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.animation.AlphaAnimation;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Magic8Ball extends Activity {
+
 	private Random randomizer = new Random();
 
 	private String getAnswer() {
@@ -21,14 +22,12 @@ public class Magic8Ball extends Activity {
 		return getResources().getStringArray(R.array.responses)[randomInt];
 	}
 
-	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		ImageView triangle = (ImageView) findViewById(R.id.MessageImage);
-		triangle.setVisibility(ImageView.INVISIBLE);
+		showMessage(R.string.shake_me_title, null);
 	}
 
 	@Override
@@ -42,21 +41,23 @@ public class Magic8Ball extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.shake:
-			showAnswer(0);
+			showMessage(null, getAnswer());
 			return true;
 		}
 		return false;
 	}
 
-	private void showAnswer(int i) {
-		/*
-		 * TODO create message use getAnswer()
-		 */
-		ImageView triangle = (ImageView) findViewById(R.id.MessageImage);
-		
+	private void showMessage(Integer resid, String message) {
+		TextView triangle = (TextView) findViewById(R.id.MessageTextView);
+		triangle.setVisibility(TextView.INVISIBLE);
+		if (resid != null)
+			triangle.setText(resid);
+		else if (message != null)
+			triangle.setText(message);
+
 		AlphaAnimation fade = new AlphaAnimation(0, 1);
-		fade.setStartOffset(500);
-		triangle.setVisibility(ImageView.VISIBLE);
+		fade.setStartOffset(1000);
+		triangle.setVisibility(TextView.VISIBLE);
 		fade.setDuration(1000);
 		triangle.startAnimation(fade);
 
@@ -66,7 +67,6 @@ public class Magic8Ball extends Activity {
 		} catch (Exception e) {
 
 		}
-
 	}
 
 }

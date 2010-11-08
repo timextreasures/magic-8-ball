@@ -1,29 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Magic 8-Ball</string>
+    <string name="shake_me_title">Потряси\nменя</string>
+    <string name="shake_menu_title">Потрясти</string>
     
 	<string-array name="responses">
-    	<item>Я вижу это как да</item>
+    	<item>Я вижу это\nкак да</item>
 		<item>Это бесспорно</item>
-		<item>Это решительно так</item>
-		<item>Наиболее вероятно</item>
-		<item>Хорошая перспектива</item>
-		<item>Знаки говорят да</item>
+		<item>Это решительно\nтак</item>
+		<item>Наиболее\nвероятно</item>
+		<item>Хорошая\nперспектива</item>
+		<item>Знаки\nговорят\nда</item>
 		<item>Без сомнения</item>
 		<item>Да</item>
-		<item>Да - определенно</item>
-		<item>Вы можете положиться на это</item>
+		<item>Да -\nопределенно</item>
+		<item>Вы можете\nположиться\nна это</item>
 		
-		<item>Туманный ответ, попробуй еще раз</item>
-		<item>Спросите снова позже</item>
-		<item>Лучше не говорить Вам сейчас</item>
-		<item>Не могу предсказать сейчас</item>
-		<item>Сконцентрируйтесь и спросите снова</item>
+		<item>Туманный ответ,\nпопробуй еще\nраз</item>
+		<item>Спросите снова\nпозже</item>
+		<item>Лучше\nне говорить\nВам сейчас</item>
+		<item>Не могу\nпредсказать сейчас</item>
+		<item>Сконцентрируйтесь\nи спросите\nснова</item>
 		
-		<item>Не рассчитывайте на это</item>
+		<item>Не рассчитывайте\nна это</item>
 		<item>Мой ответ нет</item>
-		<item>Мои источники говорят нет</item>
-		<item>Перспектива не столь хорошая</item>
+		<item>Мои источники\nговорят нет</item>
+		<item>Перспектива\nне столь\nхорошая</item>
 		<item>Очень сомнительно</item>
     </string-array>
 
