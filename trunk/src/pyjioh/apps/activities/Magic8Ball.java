@@ -5,6 +5,9 @@ import java.util.Random;
 import pyjioh.apps.R;
 import android.app.Activity;
 import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Menu;
@@ -13,10 +16,10 @@ import android.view.MenuItem;
 import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
-public class Magic8Ball extends Activity {
+public class Magic8Ball extends Activity implements SensorEventListener {
 
 	private Random randomizer = new Random();
-
+	
 	private String getAnswer() {
 		int randomInt = randomizer.nextInt(20);
 		return getResources().getStringArray(R.array.responses)[randomInt];
@@ -67,6 +70,14 @@ public class Magic8Ball extends Activity {
 		} catch (Exception e) {
 
 		}
+	}
+	
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// do nothing
+	}
+
+	public void onSensorChanged(SensorEvent event) {
+		
 	}
 
 }
