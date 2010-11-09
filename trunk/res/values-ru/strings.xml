@@ -5,28 +5,28 @@
     <string name="shake_menu_title">Потрясти</string>
     
 	<string-array name="responses">
-    	<item>Я вижу это\nкак да</item>
-		<item>Это бесспорно</item>
-		<item>Это решительно\nтак</item>
+    	<item>Я вижу это\nкак Да</item>
+		<item>Это\nфакт</item>
+		<item>Это\nбесспорно\nтак</item>
 		<item>Наиболее\nвероятно</item>
-		<item>Хорошая\nперспектива</item>
+		<item>Перспектива\nхорошая</item>
 		<item>Знаки\nговорят\nда</item>
-		<item>Без сомнения</item>
+		<item>Без\nсомнения</item>
 		<item>Да</item>
-		<item>Да -\nопределенно</item>
+		<item>Определенно\n- да</item>
 		<item>Вы можете\nположиться\nна это</item>
 		
-		<item>Туманный ответ,\nпопробуй еще\nраз</item>
-		<item>Спросите снова\nпозже</item>
-		<item>Лучше\nне говорить\nВам сейчас</item>
-		<item>Не могу\nпредсказать сейчас</item>
-		<item>Сконцентрируйтесь\nи спросите\nснова</item>
+		<item>Туманный\nответ,\nпопробуй\nеще</item>
+		<item>Спросите\nснова\nпозже</item>
+		<item>Лучше\nне говорить\nВам\nсейчас</item>
+		<item>Не могу\nпредсказать\nсейчас</item>
+		<item>Сконцент-\nрируйтесь\nи спросите\nснова</item>
 		
-		<item>Не рассчитывайте\nна это</item>
-		<item>Мой ответ нет</item>
-		<item>Мои источники\nговорят нет</item>
+		<item>Не надейся\nна это</item>
+		<item>Мой ответ\nнет</item>
+		<item>Мои\nисточники\nговорят\nнет</item>
 		<item>Перспектива\nне столь\nхорошая</item>
-		<item>Очень сомнительно</item>
+		<item>Думаю,\nне стоит</item>
     </string-array>
 
 </resources>
