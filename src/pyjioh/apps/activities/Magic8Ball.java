@@ -63,13 +63,9 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 		triangle.setVisibility(TextView.VISIBLE);
 		fade.setDuration(1000);
 		triangle.startAnimation(fade);
-
+		
 		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		try {
-			vibrator.vibrate(100);
-		} catch (Exception e) {
-
-		}
+		vibrator.vibrate(200);
 	}
 	
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
