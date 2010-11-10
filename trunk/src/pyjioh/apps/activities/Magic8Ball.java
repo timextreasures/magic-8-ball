@@ -3,6 +3,7 @@ package pyjioh.apps.activities;
 import java.util.Random;
 
 import pyjioh.apps.R;
+import pyjioh.apps.consts.Settings;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -17,13 +18,20 @@ import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
 public class Magic8Ball extends Activity implements SensorEventListener {
-
+	
 	private Random randomizer = new Random();
 	
+	private int countSensorChange = 0;
+
 	private String getAnswer() {
 		int randomInt = randomizer.nextInt(20);
 		return getResources().getStringArray(R.array.responses)[randomInt];
 	}
+	
+	private void resetSensorReadings() {
+		countSensorChange = 0;
+	}
+
 
 	/** Called when the activity is first created. */
 	@Override
@@ -58,22 +66,27 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 		else if (message != null)
 			triangle.setText(message);
 
-		AlphaAnimation fade = new AlphaAnimation(0, 1);
-		fade.setStartOffset(1000);
+		AlphaAnimation animation = new AlphaAnimation(0, 1);
+		animation.setStartOffset(Settings.START_OFFSET);
 		triangle.setVisibility(TextView.VISIBLE);
-		fade.setDuration(1000);
-		triangle.startAnimation(fade);
-		
+		animation.setDuration(Settings.FADE_DURATION);
+		triangle.startAnimation(animation);
+
 		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		vibrator.vibrate(200);
+		vibrator.vibrate(Settings.VIBRATE_TIME);
+		
+		resetSensorReadings();
 	}
-	
+
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// do nothing
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-		
+		if (event.values[2] > 6)
+			countSensorChange++;
+		if ((countSensorChange >= 4) && event.values[2] > 6)
+			showMessage(null, getAnswer());
 	}
 
 }
