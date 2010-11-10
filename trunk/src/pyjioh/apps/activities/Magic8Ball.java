@@ -1,5 +1,6 @@
 package pyjioh.apps.activities;
 
+import java.util.List;
 import java.util.Random;
 
 import pyjioh.apps.R;
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.Menu;
@@ -18,26 +20,38 @@ import android.view.animation.AlphaAnimation;
 import android.widget.TextView;
 
 public class Magic8Ball extends Activity implements SensorEventListener {
-	
+
 	private Random randomizer = new Random();
-	
 	private int countSensorChange = 0;
+	private SensorManager sensorManager;
+	private Sensor sensor;
 
 	private String getAnswer() {
 		int randomInt = randomizer.nextInt(20);
 		return getResources().getStringArray(R.array.responses)[randomInt];
 	}
-	
+
 	private void resetSensorReadings() {
 		countSensorChange = 0;
 	}
 
+	private void registerSensorManager() {
+		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		List<Sensor> sensors = sensorManager
+				.getSensorList(Sensor.TYPE_ACCELEROMETER);
+		if (sensors.size() > 0) {
+			sensor = sensors.get(0);
+			sensorManager.registerListener(this, sensor,
+					SensorManager.SENSOR_DELAY_GAME);
+		}
+	}
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		registerSensorManager();
 		showMessage(R.string.shake_me_title, null);
 	}
 
@@ -74,7 +88,7 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 
 		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(Settings.VIBRATE_TIME);
-		
+
 		resetSensorReadings();
 	}
 
