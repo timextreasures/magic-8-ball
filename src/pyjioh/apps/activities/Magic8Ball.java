@@ -28,7 +28,8 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 	private float lastX;
 	private float lastY;
 	private float lastZ;
-	private long lastShakeTime;
+	private long lastSensorChanged;
+	private long lastShake;
 
 	private boolean isSensorRegistered() {
 		return sensor != null;
@@ -113,28 +114,31 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 	}
 
 	private boolean isShakeEnough(long now, float x, float y, float z) {
-		if (lastShakeTime == 0) {
-			lastShakeTime = now;
+		if (lastSensorChanged == 0) {
+			lastSensorChanged = now;
+			lastShake = now;
 			lastX = x;
 			lastY = y;
 			lastZ = z;
 			return false;
 		} else {
-			long timeDiff = now - lastShakeTime;
+			long timeDiff = now - lastSensorChanged;
 			if (timeDiff > 0) {
 				float shakeForce = Math.abs(x + y + z - lastX - lastY - lastZ)
 						/ timeDiff;
 				
-				lastShakeTime = now;
+				lastSensorChanged = now;
 				lastX = x;
                 lastY = y;
                 lastZ = z;
                 
 				if (shakeForce > Settings.SHAKE_FORCE) {
-                    if (now - lastShakeTime >= Settings.SHAKE_TIME) {
-                    	lastShakeTime = 0;
+                    if (now - lastShake >= Settings.SHAKE_TIME) {
+                    	lastShake = now;
+                    	lastSensorChanged = 0;
                     	return true;
                     }
+                    lastShake = now;
                 }
 			}
 			return false;
