@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Magic 8-Ball</string>
     <string name="shake_me_title">Shake Me</string>
+    <string name="menu_shake_title">Press Menu\n- Shake</string>
     <string name="shake_menu_title">Shake</string>
     
 	<string-array name="responses">

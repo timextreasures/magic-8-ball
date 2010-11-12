@@ -2,7 +2,8 @@
 <resources>
     <string name="app_name">Magic 8-Ball</string>
     <string name="shake_me_title">Потряси\nменя</string>
-    <string name="shake_menu_title">Потрясти</string>
+    <string name="menu_shake_title">Нажмите\nМеню -\nТрясти</string>
+    <string name="shake_menu_title">Трясти</string>
     
 	<string-array name="responses">
     	<item>Я вижу это\nкак Да</item>
