@@ -34,7 +34,8 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050000;
+        public static final int menu_shake_title=0x7f050002;
         public static final int shake_me_title=0x7f050001;
-        public static final int shake_menu_title=0x7f050002;
+        public static final int shake_menu_title=0x7f050003;
     }
 }
