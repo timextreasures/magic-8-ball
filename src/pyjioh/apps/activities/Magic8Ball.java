@@ -1,6 +1,5 @@
 package pyjioh.apps.activities;
 
-import java.util.List;
 import java.util.Random;
 
 import pyjioh.apps.R;
@@ -25,11 +24,10 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 
 	private SensorManager sensorManager;
 	private Sensor sensor;
-	private float lastX;
-	private float lastY;
-	private float lastZ;
-	private long lastSensorChanged;
-	private long lastShake;
+
+	private int shakeCount = 0;
+	private double threshold = 1.5d * SensorManager.GRAVITY_EARTH
+			* SensorManager.GRAVITY_EARTH;
 
 	private boolean isSensorRegistered() {
 		return sensor != null;
@@ -45,13 +43,9 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 
 	private void registerSensorListener() {
 		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		List<Sensor> sensors = sensorManager
-				.getSensorList(Sensor.TYPE_ACCELEROMETER);
-		if (sensors.size() > 0) {
-			sensor = sensors.get(0);
-			sensorManager.registerListener(this, sensor,
-					SensorManager.SENSOR_DELAY_GAME);
-		}
+		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		sensorManager.registerListener(this, sensor,
+				SensorManager.SENSOR_DELAY_UI);
 	}
 
 	/**
@@ -108,41 +102,26 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 	}
 
 	public void onSensorChanged(SensorEvent event) {
-		if (isShakeEnough(event.timestamp, event.values[0], event.values[1],
-				event.values[2]))
-			showMessage(null, getAnswer());
+		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
+			if (isShakeEnough(event.values[0],
+					event.values[1], event.values[2]))
+				showMessage(null, getAnswer());
 	}
 
-	private boolean isShakeEnough(long now, float x, float y, float z) {
-		if (lastSensorChanged == 0) {
-			lastSensorChanged = now;
-			lastShake = now;
-			lastX = x;
-			lastY = y;
-			lastZ = z;
-			return false;
-		} else {
-			long timeDiff = now - lastSensorChanged;
-			if (timeDiff > 0) {
-				float shakeForce = Math.abs(x + y + z - lastX - lastY - lastZ)
-						/ timeDiff;
-				
-				lastSensorChanged = now;
-				lastX = x;
-                lastY = y;
-                lastZ = z;
-                
-				if (shakeForce > Settings.SHAKE_FORCE) {
-                    if (now - lastShake >= Settings.SHAKE_TIME) {
-                    	lastShake = now;
-                    	lastSensorChanged = 0;
-                    	return true;
-                    }
-                    lastShake = now;
-                }
+	private boolean isShakeEnough(float x, float y, float z) {
+			double force = x * x;
+			force += y * y;
+			force += z * z;
+
+			if (threshold < force) {
+				shakeCount++;
+				if (shakeCount > Settings.SHAKE_COUNT) {
+					shakeCount = 0;
+					return true;
+				}
 			}
 			return false;
-		}
 	}
 
 }
+	
