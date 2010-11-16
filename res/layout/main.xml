@@ -20,7 +20,7 @@
 				android:background="@drawable/triangle" 
 				android:text="@string/shake_me_title" 
 				android:focusable="false" 
-				android:gravity="center_vertical|center">
+				android:gravity="center_vertical|center" android:layout_marginTop="14dip">
 			</TextView>
 </LinearLayout>
 </FrameLayout>
