@@ -24,10 +24,10 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 
 	private SensorManager sensorManager;
 	private Sensor sensor;
-
+	private float lastX;
+	private float lastY;
+	private float lastZ;
 	private int shakeCount = 0;
-	private double threshold = 1.5d * SensorManager.GRAVITY_EARTH
-			* SensorManager.GRAVITY_EARTH;
 
 	private boolean isSensorRegistered() {
 		return sensor != null;
@@ -42,10 +42,12 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 	}
 
 	private void registerSensorListener() {
-		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		sensorManager.registerListener(this, sensor,
 				SensorManager.SENSOR_DELAY_UI);
+	}
+
+	private void unregisterSensorListener() {
+		sensorManager.unregisterListener(this);
 	}
 
 	/**
@@ -55,11 +57,8 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		registerSensorListener();
-		if (isSensorRegistered())
-			showMessage(R.string.shake_me_title, null);
-		else
-			showMessage(R.string.menu_shake_title, null);
+		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 	}
 
 	@Override
@@ -77,6 +76,22 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		registerSensorListener();
+		if (isSensorRegistered())
+			showMessage(R.string.shake_me_title, null);
+		else
+			showMessage(R.string.menu_shake_title, null);
+	}
+
+	@Override
+	public void onPause() {
+		unregisterSensorListener();
+		super.onPause();
 	}
 
 	private void showMessage(Integer resid, String message) {
@@ -103,25 +118,32 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 
 	public void onSensorChanged(SensorEvent event) {
 		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
-			if (isShakeEnough(event.values[0],
-					event.values[1], event.values[2]))
+			if (isShakeEnough(event.values[0], event.values[1], event.values[2]))
 				showMessage(null, getAnswer());
 	}
 
 	private boolean isShakeEnough(float x, float y, float z) {
-			double force = x * x;
-			force += y * y;
-			force += z * z;
+		double force = 0.0d;
+		force += Math.pow((x - lastX) / SensorManager.GRAVITY_EARTH, 2.0);
+		force += Math.pow((y - lastY) / SensorManager.GRAVITY_EARTH, 2.0);
+		force += Math.pow((z - lastZ) / SensorManager.GRAVITY_EARTH, 2.0);
+		force = Math.sqrt(force);
 
-			if (threshold < force) {
-				shakeCount++;
-				if (shakeCount > Settings.SHAKE_COUNT) {
-					shakeCount = 0;
-					return true;
-				}
+		lastX = x;
+		lastY = y;
+		lastZ = z;
+
+		if (force > Settings.THRESHOLD) {
+			shakeCount++;
+			if (shakeCount > Settings.SHAKE_COUNT) {
+				shakeCount = 0;
+				lastX = 0;
+				lastY = 0;
+				lastZ = 0;
+				return true;
 			}
-			return false;
+		}
+		return false;
 	}
 
 }
-	
