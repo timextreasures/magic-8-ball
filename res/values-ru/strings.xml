@@ -19,7 +19,7 @@
     <string name="threshold_dialogTitle">Выберите значение в пределах от 0.1 до 4.0</string>
     
     <string name="vibrate_time_id">vibrateTime</string>
-    <string name="vibrate_time_title">Время вибарции</string>
+    <string name="vibrate_time_title">Время вибрации</string>
     <string name="vibrate_time_summary">Опция задает время вибрации, которая оповещает вас об ответе</string>
     <string name="vibrate_time_dialogTitle">Установите время в миллисекундах</string>
     
