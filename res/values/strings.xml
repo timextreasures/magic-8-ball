@@ -16,7 +16,7 @@
     <string name="threshold_id">threshold</string>
     <string name="threshold_title">Threshold</string>
     <string name="threshold_summary">The threshold value for shaking</string>
-    <string name="threshold_dialogTitle">Choosing the threshold value between 0.1 and 4.0</string>
+    <string name="threshold_dialogTitle">Choosing value between 0.1 and 4.0</string>
     
     <string name="vibrate_time_id">vibrateTime</string>
     <string name="vibrate_time_title">Vibrate time</string>
