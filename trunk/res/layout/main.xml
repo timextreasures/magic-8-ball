@@ -18,7 +18,7 @@
 				android:layout_height="wrap_content" 
 				android:layout_gravity="center" 
 				android:background="@drawable/triangle" 
-				android:text="@string/shake_me_title" 
+				android:text="@string/shake_me_caption" 
 				android:focusable="false" 
 				android:gravity="center_vertical|center" android:layout_marginTop="14dip">
 			</TextView>
