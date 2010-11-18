@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="pyjioh.apps" android:versionCode="1" android:versionName="1.0">
+	package="pyjioh.apps" android:versionCode="1" android:versionName="1.1">
 	<uses-permission android:name="android.permission.VIBRATE" />
 	<application android:icon="@drawable/icon" android:label="@string/app_name">
 		<activity android:label="@string/app_name" android:name=".activities.Magic8Ball"
@@ -10,7 +10,9 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-
+        <activity android:name=".activities.Preferences"
+              android:label="@string/app_name">
+        </activity>
 	</application>
 	<uses-sdk android:minSdkVersion="3" />
 

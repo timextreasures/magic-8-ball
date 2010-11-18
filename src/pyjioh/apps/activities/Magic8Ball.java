@@ -3,15 +3,18 @@ package pyjioh.apps.activities;
 import java.util.Random;
 
 import pyjioh.apps.R;
-import pyjioh.apps.consts.Settings;
+import pyjioh.apps.consts.Defaults;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +25,8 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 
 	private Random randomizer = new Random();
 
+	private SharedPreferences preferences;
+	private Vibrator vibrator;
 	private SensorManager sensorManager;
 	private Sensor sensor;
 	private float lastX;
@@ -50,6 +55,13 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 		sensorManager.unregisterListener(this);
 	}
 
+	private void initialization() {
+		preferences = PreferenceManager.getDefaultSharedPreferences(this);
+		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+	}
+	
 	/**
 	 * Called when the activity is first created.
 	 */
@@ -57,8 +69,7 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-		sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+		initialization();
 	}
 
 	@Override
@@ -72,7 +83,10 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.shake:
-			showMessage(null, getAnswer());
+			showMessage(getAnswer());
+			return true;
+		case R.id.preferences:
+			startActivity(new Intent(this, Preferences.class));
 			return true;
 		}
 		return false;
@@ -83,9 +97,9 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 		super.onResume();
 		registerSensorListener();
 		if (isSensorRegistered())
-			showMessage(R.string.shake_me_title, null);
+			showMessage(getString(R.string.shake_me_caption));
 		else
-			showMessage(R.string.menu_shake_title, null);
+			showMessage(getString(R.string.menu_shake_caption));
 	}
 
 	@Override
@@ -94,22 +108,19 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 		super.onPause();
 	}
 
-	private void showMessage(Integer resid, String message) {
+	private void showMessage(String message) {
 		TextView triangle = (TextView) findViewById(R.id.MessageTextView);
 		triangle.setVisibility(TextView.INVISIBLE);
-		if (resid != null)
-			triangle.setText(resid);
-		else if (message != null)
-			triangle.setText(message);
+		triangle.setText(message);
 
 		AlphaAnimation animation = new AlphaAnimation(0, 1);
-		animation.setStartOffset(Settings.START_OFFSET);
+		animation.setStartOffset(Defaults.START_OFFSET);
 		triangle.setVisibility(TextView.VISIBLE);
-		animation.setDuration(Settings.FADE_DURATION);
+		animation.setDuration(Defaults.FADE_DURATION);
 		triangle.startAnimation(animation);
 
-		Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		vibrator.vibrate(Settings.VIBRATE_TIME);
+		vibrator.vibrate(Integer.parseInt(preferences.getString(
+				getString(R.string.vibrate_time_id), Defaults.VIBRATE_TIME)));
 	}
 
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -119,7 +130,7 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 	public void onSensorChanged(SensorEvent event) {
 		if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER)
 			if (isShakeEnough(event.values[0], event.values[1], event.values[2]))
-				showMessage(null, getAnswer());
+				showMessage(getAnswer());
 	}
 
 	private boolean isShakeEnough(float x, float y, float z) {
@@ -133,9 +144,11 @@ public class Magic8Ball extends Activity implements SensorEventListener {
 		lastY = y;
 		lastZ = z;
 
-		if (force > Settings.THRESHOLD) {
+		if (force > Float.parseFloat(preferences.getString(
+				getString(R.string.threshold_id), Defaults.THRESHOLD))) {
 			shakeCount++;
-			if (shakeCount > Settings.SHAKE_COUNT) {
+			if (shakeCount > Integer.parseInt(preferences.getString(
+					getString(R.string.shake_count_id), Defaults.SHAKE_COUNT))) {
 				shakeCount = 0;
 				lastX = 0;
 				lastY = 0;

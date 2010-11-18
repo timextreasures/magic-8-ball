@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Magic 8-Ball</string>
-    <string name="shake_me_title">Shake Me</string>
-    <string name="menu_shake_title">Press Menu\n- Shake</string>
-    <string name="shake_menu_title">Shake</string>
+    <string name="shake_me_caption">Shake Me</string>
+    <string name="press_menu_shake_caption">Press Menu\n- Shake</string>
+    <string name="menu_shake_caption">Shake</string>
+    <string name="menu_preferences_caption">Preferences</string>
+    
+    <string name="preferences_section_title">Magic 8-ball Preferences</string>
+    
+    <string name="shake_count_id">shakeCount</string>
+    <string name="shake_count_title">Shake count</string>
+    <string name="shake_count_summary">The number of shakes needed to get answer</string>
+    <string name="shake_count_dialogTitle">Set shake count value</string>
+    
+    <string name="threshold_id">threshold</string>
+    <string name="threshold_title">Threshold</string>
+    <string name="threshold_summary">The number of shake threshold</string>
+    <string name="threshold_dialogTitle">Choosing a threshold between 0.1 and 4.0</string>
+    
+    <string name="vibrate_time_id">vibrateTime</string>
+    <string name="vibrate_time_title">Vibrate time</string>
+    <string name="vibrate_time_summary">The option sets vibrate time (milliseconds) when you get answer</string>
+    <string name="vibrate_time_dialogTitle">Set vibrate time in milliseconds</string>
     
 	<string-array name="responses">
     	<item>As I see\nit, yes</item>
