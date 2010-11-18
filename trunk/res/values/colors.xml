@@ -8,5 +8,5 @@
  ! Visit http://www.pragmaticprogrammer.com/titles/eband2 for more book information.
 -->
 <resources>
-   <color name="background">#ffffff</color>
+   <color name="text_color">#ffffff</color>
 </resources>
