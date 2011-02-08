@@ -15,7 +15,7 @@
     
     <string name="threshold_id">threshold</string>
     <string name="threshold_title">Порог</string>
-    <string name="threshold_summary">Порог чувствительности сеносра</string>
+    <string name="threshold_summary">Порог чувствительности сенсора</string>
     <string name="threshold_dialogTitle">Выберите значение в пределах от 0.1 до 4.0</string>
     
     <string name="vibrate_time_id">vibrateTime</string>
